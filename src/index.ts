@@ -13,5 +13,16 @@ export type {
   SamplerConfig,
   VideoSampler,
 } from './types';
+
 export { VideoNotFoundError, InvalidVideoError, FfmpegNotFoundError } from './errors';
-// createSampler — to be implemented in Phase 2
+
+export { createSampler } from './create-sampler';
+export { sample } from './sample';
+export { getVideoInfo } from './info';
+
+export {
+  intervalTimestamps,
+  uniformTimestamps,
+  keyframeTimestamps,
+  customTimestamps,
+} from './strategies';

@@ -1,6 +1,6 @@
 {
   "name": "vidsnap-ai",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Smart video frame sampler for vision AI analysis",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

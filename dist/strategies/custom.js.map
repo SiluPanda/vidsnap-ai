@@ -1,0 +1,1 @@
+{"version":3,"file":"custom.js","sourceRoot":"","sources":["../../src/strategies/custom.ts"],"names":[],"mappings":";;AAEA,4CAQC;AARM,KAAK,UAAU,gBAAgB,CACpC,QAAgB,EAChB,QAAuB,EACvB,SAAoB;IAEpB,KAAK,QAAQ,CAAC,CAAC,+CAA+C;IAC9D,MAAM,MAAM,GAAG,QAAQ,CAAC,SAAS,CAAC,CAAC;IACnC,OAAO,OAAO,CAAC,OAAO,CAAC,MAAM,CAAC,CAAC;AACjC,CAAC"}
