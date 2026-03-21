@@ -6,14 +6,14 @@ This file tracks all implementation tasks derived from SPEC.md. Each task is gra
 
 ## Phase 1: Project Scaffolding & Core Types
 
-- [ ] **Install runtime dependencies** -- Add `fluent-ffmpeg` as a runtime dependency in `package.json`. | Status: not_done
-- [ ] **Install dev dependencies** -- Add `typescript`, `vitest`, `eslint`, `@types/node`, `@types/fluent-ffmpeg`, and `sharp` (for tests) as dev dependencies in `package.json`. | Status: not_done
-- [ ] **Configure peer dependencies** -- Add `sharp` (>=0.33.0) as an optional peer dependency in `package.json` with `peerDependenciesMeta`. | Status: not_done
-- [ ] **Configure optional dependencies** -- Add `vision-prep` (^0.1.0) as an optional dependency in `package.json`. | Status: not_done
-- [ ] **Add CLI binary entry point** -- Add `"bin": { "vidsnap-ai": "dist/cli.js" }` to `package.json`. | Status: not_done
-- [ ] **Create src/types.ts** -- Define all TypeScript types: `VideoSource`, `SamplingStrategy`, `SceneAlgorithm`, `FrameSelector`, `SampleOptions`, `SceneDetectOptions`, `SamplerConfig`, `SampleResult`, `SampleMeta`, `SampledFrame`, `SceneChange`, `VideoInfo`, `VideoSampler`. Export all types. | Status: not_done
-- [ ] **Create src/errors.ts** -- Define error classes: `VideoNotFoundError` (file path does not exist), `InvalidVideoError` (corrupted or non-video file), `FfmpegNotFoundError` (ffmpeg/ffprobe not installed, include installation instructions for macOS/Ubuntu/Windows in the error message). | Status: not_done
-- [ ] **Create directory structure** -- Create all directories specified in the file structure: `src/strategies/`, `src/detection/`, `src/dedup/`, `src/video/`, `src/output/`, `src/__tests__/`, `src/__tests__/strategies/`, `src/__tests__/detection/`, `src/__tests__/dedup/`, `src/__tests__/video/`, `src/__tests__/fixtures/`. | Status: not_done
+- [x] **Install runtime dependencies** -- Add `fluent-ffmpeg` as a runtime dependency in `package.json`. | Status: done
+- [x] **Install dev dependencies** -- Add `typescript`, `vitest`, `eslint`, `@types/node`, `@types/fluent-ffmpeg`, and `sharp` (for tests) as dev dependencies in `package.json`. | Status: done
+- [x] **Configure peer dependencies** -- Add `sharp` (>=0.33.0) as an optional peer dependency in `package.json` with `peerDependenciesMeta`. | Status: done
+- [x] **Configure optional dependencies** -- Add `vision-prep` (^0.1.0) as an optional dependency in `package.json`. | Status: done
+- [x] **Add CLI binary entry point** -- Add `"bin": { "vidsnap-ai": "dist/cli.js" }` to `package.json`. | Status: done
+- [x] **Create src/types.ts** -- Define all TypeScript types: `VideoSource`, `SamplingStrategy`, `SceneAlgorithm`, `FrameSelector`, `SampleOptions`, `SceneDetectOptions`, `SamplerConfig`, `SampleResult`, `SampleMeta`, `SampledFrame`, `SceneChange`, `VideoInfo`, `VideoSampler`. Export all types. | Status: done
+- [x] **Create src/errors.ts** -- Define error classes: `VideoNotFoundError` (file path does not exist), `InvalidVideoError` (corrupted or non-video file), `FfmpegNotFoundError` (ffmpeg/ffprobe not installed, include installation instructions for macOS/Ubuntu/Windows in the error message). | Status: done
+- [x] **Create directory structure** -- Create all directories specified in the file structure: `src/strategies/`, `src/detection/`, `src/dedup/`, `src/video/`, `src/output/`, `src/__tests__/`, `src/__tests__/strategies/`, `src/__tests__/detection/`, `src/__tests__/dedup/`, `src/__tests__/video/`, `src/__tests__/fixtures/`. | Status: done
 
 ---
 
