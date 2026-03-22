@@ -21,22 +21,22 @@ This file tracks all implementation tasks derived from SPEC.md. Each task is gra
 
 - [ ] **Implement ffmpeg availability check** -- In `src/video/ffmpeg.ts`, create a function that verifies `ffmpeg` is installed and accessible. Throw `FfmpegNotFoundError` with platform-specific installation instructions if not found. | Status: not_done
 - [ ] **Implement ffprobe availability check** -- In `src/video/ffprobe.ts`, create a function that verifies `ffprobe` is installed and accessible. Throw `FfmpegNotFoundError` if not found. | Status: not_done
-- [ ] **Implement ffprobe metadata extraction** -- In `src/video/ffprobe.ts`, implement a function that runs `ffprobe` on a video file and parses the JSON output into a `VideoInfo` object. Extract: path, duration, width, height, fps, codec, totalFrames (duration * fps), fileSize, bitrate, hasAudio, format. | Status: not_done
-- [ ] **Handle Buffer input for ffprobe** -- When the video source is a Buffer instead of a file path, write it to a temporary file, run ffprobe, then clean up the temporary file. | Status: not_done
+- [x] **Implement ffprobe metadata extraction** -- In `src/video/ffprobe.ts`, implement a function that runs `ffprobe` on a video file and parses the JSON output into a `VideoInfo` object. Extract: path, duration, width, height, fps, codec, totalFrames (duration * fps), fileSize, bitrate, hasAudio, format. | Status: done
+- [x] **Handle Buffer input for ffprobe** -- When the video source is a Buffer instead of a file path, write it to a temporary file, run ffprobe, then clean up the temporary file. | Status: done
 - [ ] **Implement single-frame extraction** -- In `src/video/ffmpeg.ts`, implement a function that extracts a single frame at a given timestamp as a JPEG or PNG Buffer using `fluent-ffmpeg`. Support configurable output format and JPEG quality. | Status: not_done
-- [ ] **Implement batch-frame extraction** -- In `src/video/frame-extractor.ts`, implement a function that extracts multiple frames at specified timestamps in a single `ffmpeg` pass for efficiency. Return an array of Buffers with their timestamps. | Status: not_done
+- [x] **Implement batch-frame extraction** -- In `src/video/frame-extractor.ts`, implement a function that extracts multiple frames at specified timestamps in a single `ffmpeg` pass for efficiency. Return an array of Buffers with their timestamps. | Status: done
 - [ ] **Implement keyframe (I-frame) extraction** -- In `src/video/ffmpeg.ts`, implement I-frame extraction using `ffmpeg -skip_frame nokey`. Return all keyframes as Buffers with timestamps. Support `maxFrames` parameter to select an evenly spaced subset. | Status: not_done
-- [ ] **Handle Buffer input for ffmpeg** -- When the video source is a Buffer, write it to a temporary file, extract frames, then clean up. | Status: not_done
+- [x] **Handle Buffer input for ffmpeg** -- When the video source is a Buffer, write it to a temporary file, extract frames, then clean up. | Status: done
 - [ ] **Implement frame resizing** -- In `src/video/ffmpeg.ts` or using `sharp`, implement resizing frames to `maxWidth`/`maxHeight` while preserving aspect ratio. | Status: not_done
 - [ ] **Create src/video/index.ts** -- Export all video I/O functions from a single barrel file. | Status: not_done
-- [ ] **Implement getVideoInfo() function** -- In `src/info.ts`, implement the public `getVideoInfo(video: VideoSource): Promise<VideoInfo>` function. Validate the input, call ffprobe, and return `VideoInfo`. | Status: not_done
+- [x] **Implement getVideoInfo() function** -- In `src/info.ts`, implement the public `getVideoInfo(video: VideoSource): Promise<VideoInfo>` function. Validate the input, call ffprobe, and return `VideoInfo`. | Status: done
 
 ---
 
 ## Phase 3: Video I/O Tests
 
 - [ ] **Create test fixture generation script** -- In `src/__tests__/fixtures/generate-fixtures.sh`, write a shell script that uses `ffmpeg` to generate: `sample-10s.mp4` (10s video with 3 distinct scenes using different solid colors), `static-5s.mp4` (5s static single-color video), `slides-30s.mp4` (30s with 5 color transitions simulating slide changes). | Status: not_done
-- [ ] **Write ffprobe wrapper tests** -- In `src/__tests__/video/ffprobe.test.ts`, test: extracting metadata from a known test video and verifying all fields (duration, resolution, fps, codec, fileSize), handling missing file (throws `VideoNotFoundError`), handling corrupted file (throws `InvalidVideoError`), handling audio-only file (throws `InvalidVideoError`). | Status: not_done
+- [x] **Write ffprobe wrapper tests** -- In `src/__tests__/video/ffprobe.test.ts`, test: extracting metadata from a known test video and verifying all fields (duration, resolution, fps, codec, fileSize), handling missing file (throws `VideoNotFoundError`), handling corrupted file (throws `InvalidVideoError`), handling audio-only file (throws `InvalidVideoError`). | Status: done
 - [ ] **Write ffmpeg wrapper tests** -- In `src/__tests__/video/ffmpeg.test.ts`, test: extracting a single frame at a specific timestamp returns a valid JPEG buffer, extracting a frame at timestamp 0 returns a valid image, extracting a frame beyond video duration is handled gracefully, keyframe extraction returns valid frames, batch extraction returns correct number of frames. | Status: not_done
 - [ ] **Write getVideoInfo() tests** -- In `src/__tests__/info.test.ts`, test: returns correct metadata for known test video, throws `VideoNotFoundError` for missing file, throws `InvalidVideoError` for corrupted file, handles Buffer input. | Status: not_done
 
@@ -44,34 +44,34 @@ This file tracks all implementation tasks derived from SPEC.md. Each task is gra
 
 ## Phase 4: Basic Sampling Strategies
 
-- [ ] **Implement interval strategy** -- In `src/strategies/interval.ts`, implement fixed-interval sampling. Compute timestamps at `0, intervalSeconds, 2*intervalSeconds, ...` up to video duration. Default `intervalSeconds` is 1.0. | Status: not_done
-- [ ] **Implement uniform strategy** -- In `src/strategies/uniform.ts`, implement uniform-count sampling. Compute `count` evenly spaced timestamps: `i * (duration / count)` for i in 0..count-1. Default count is 10. | Status: not_done
-- [ ] **Implement keyframe strategy** -- In `src/strategies/keyframe.ts`, implement I-frame extraction strategy. Call the keyframe extractor, optionally subsample if `maxFrames` is specified. | Status: not_done
-- [ ] **Implement custom strategy** -- In `src/strategies/custom.ts`, implement custom selector dispatch. Call the user-provided `selector(videoInfo)` function to get timestamps, then extract frames at those timestamps. Validate that the selector function is provided when strategy is 'custom'. | Status: not_done
-- [ ] **Create strategy dispatch** -- In `src/strategies/index.ts`, create a dispatcher that routes to the correct strategy implementation based on the `strategy` option. | Status: not_done
-- [ ] **Implement maxFrames capping** -- In the strategy dispatch or `sample.ts`, enforce the `maxFrames` ceiling (default: 50) across all strategies. When a strategy produces more frames than `maxFrames`, select an evenly spaced subset. | Status: not_done
-- [ ] **Implement minFrames padding** -- In `sample.ts`, when a strategy produces fewer frames than `minFrames` (default: 1), pad with uniformly spaced frames to reach `minFrames`. | Status: not_done
+- [x] **Implement interval strategy** -- In `src/strategies/interval.ts`, implement fixed-interval sampling. Compute timestamps at `0, intervalSeconds, 2*intervalSeconds, ...` up to video duration. Default `intervalSeconds` is 1.0. | Status: done
+- [x] **Implement uniform strategy** -- In `src/strategies/uniform.ts`, implement uniform-count sampling. Compute `count` evenly spaced timestamps: `i * (duration / count)` for i in 0..count-1. Default count is 10. | Status: done
+- [x] **Implement keyframe strategy** -- In `src/strategies/keyframe.ts`, implement I-frame extraction strategy. Call the keyframe extractor, optionally subsample if `maxFrames` is specified. | Status: done
+- [x] **Implement custom strategy** -- In `src/strategies/custom.ts`, implement custom selector dispatch. Call the user-provided `selector(videoInfo)` function to get timestamps, then extract frames at those timestamps. Validate that the selector function is provided when strategy is 'custom'. | Status: done
+- [x] **Create strategy dispatch** -- In `src/strategies/index.ts`, create a dispatcher that routes to the correct strategy implementation based on the `strategy` option. | Status: done
+- [x] **Implement maxFrames capping** -- In the strategy dispatch or `sample.ts`, enforce the `maxFrames` ceiling (default: 50) across all strategies. When a strategy produces more frames than `maxFrames`, select an evenly spaced subset. | Status: done
+- [x] **Implement minFrames padding** -- In `sample.ts`, when a strategy produces fewer frames than `minFrames` (default: 1), pad with uniformly spaced frames to reach `minFrames`. | Status: done
 
 ---
 
 ## Phase 5: sample() Function & Output
 
-- [ ] **Implement sample() orchestration** -- In `src/sample.ts`, implement the main `sample(video, options?)` function. Steps: (1) validate input, (2) get video info via ffprobe, (3) dispatch to strategy, (4) extract frames at computed timestamps, (5) apply maxFrames/minFrames, (6) format output, (7) build and return `SampleResult` with `frames`, `video`, and `meta`. | Status: not_done
-- [ ] **Implement SampleMeta population** -- In `src/sample.ts`, track and populate all `SampleMeta` fields: `strategy`, `candidatesEvaluated`, `framesDeduped`, `sceneChangesDetected`, `processingTimeMs`. Use `performance.now()` or `Date.now()` for timing. | Status: not_done
-- [ ] **Implement SampledFrame construction** -- Build each `SampledFrame` with: `buffer`, `timestamp`, `index` (sequential), `mimeType`, `width`, `height`, `byteLength`, `isSceneChange` (false for non-scene strategies), and optional fields. | Status: not_done
-- [ ] **Implement base64 output** -- In `src/output/base64.ts`, implement base64 encoding of frame Buffers. Populate `SampledFrame.base64` when `outputBase64: true`. The base64 string must NOT include the `data:` URL prefix. | Status: not_done
+- [x] **Implement sample() orchestration** -- In `src/sample.ts`, implement the main `sample(video, options?)` function. Steps: (1) validate input, (2) get video info via ffprobe, (3) dispatch to strategy, (4) extract frames at computed timestamps, (5) apply maxFrames/minFrames, (6) format output, (7) build and return `SampleResult` with `frames`, `video`, and `meta`. | Status: done
+- [x] **Implement SampleMeta population** -- In `src/sample.ts`, track and populate all `SampleMeta` fields: `strategy`, `candidatesEvaluated`, `framesDeduped`, `sceneChangesDetected`, `processingTimeMs`. Use `performance.now()` or `Date.now()` for timing. | Status: done
+- [x] **Implement SampledFrame construction** -- Build each `SampledFrame` with: `buffer`, `timestamp`, `index` (sequential), `mimeType`, `width`, `height`, `byteLength`, `isSceneChange` (false for non-scene strategies), and optional fields. | Status: done
+- [x] **Implement base64 output** -- In `src/output/base64.ts`, implement base64 encoding of frame Buffers. Populate `SampledFrame.base64` when `outputBase64: true`. The base64 string must NOT include the `data:` URL prefix. | Status: done
 - [ ] **Create src/output/index.ts** -- Export all output formatting functions from a barrel file. | Status: not_done
-- [ ] **Wire up public exports in src/index.ts** -- Export `sample`, `getVideoInfo`, and all types from `src/index.ts`. | Status: not_done
+- [x] **Wire up public exports in src/index.ts** -- Export `sample`, `getVideoInfo`, and all types from `src/index.ts`. | Status: done
 - [ ] **Implement AbortSignal support** -- In `sample()`, check the `signal` option for cancellation. Abort ffmpeg processes and throw an `AbortError` when the signal is aborted. | Status: not_done
 
 ---
 
 ## Phase 6: Basic Sampling Strategy Tests
 
-- [ ] **Write interval strategy tests** -- In `src/__tests__/strategies/interval.test.ts`, test: 60s video at 1s interval produces 60 timestamps, 60s video at 5s interval produces 12 timestamps, interval larger than duration produces 1 timestamp at time 0, maxFrames caps the output, timestamps are in ascending order. | Status: not_done
-- [ ] **Write uniform strategy tests** -- In `src/__tests__/strategies/uniform.test.ts`, test: count=10 on 60s video produces exactly 10 timestamps, count=1 produces single timestamp at time 0, count greater than total frames handled gracefully, timestamps are evenly spaced. | Status: not_done
+- [x] **Write interval strategy tests** -- In `src/__tests__/strategies/interval.test.ts`, test: 60s video at 1s interval produces 60 timestamps, 60s video at 5s interval produces 12 timestamps, interval larger than duration produces 1 timestamp at time 0, maxFrames caps the output, timestamps are in ascending order. | Status: done
+- [x] **Write uniform strategy tests** -- In `src/__tests__/strategies/uniform.test.ts`, test: count=10 on 60s video produces exactly 10 timestamps, count=1 produces single timestamp at time 0, count greater than total frames handled gracefully, timestamps are evenly spaced. | Status: done
 - [ ] **Write keyframe strategy tests** -- In `src/__tests__/strategies/keyframe.test.ts`, test: extraction produces valid frames with timestamps, maxFrames limits output, frames are in timestamp order. | Status: not_done
-- [ ] **Write sample() function tests** -- In `src/__tests__/sample.test.ts`, test: sample with interval strategy returns SampleResult with correct structure, frames array contains valid SampledFrame objects, meta contains correct strategy name and processing time, maxFrames is respected, minFrames padding works, outputFormat jpeg produces valid JPEG buffers (FF D8 magic bytes), outputFormat png produces valid PNG buffers (89 50 4E 47 magic bytes), quality parameter affects JPEG file size, outputBase64 true populates base64 field, outputBase64 false leaves base64 undefined. | Status: not_done
+- [x] **Write sample() function tests** -- In `src/__tests__/sample.test.ts`, test: sample with interval strategy returns SampleResult with correct structure, frames array contains valid SampledFrame objects, meta contains correct strategy name and processing time, maxFrames is respected, minFrames padding works, outputFormat jpeg produces valid JPEG buffers (FF D8 magic bytes), outputFormat png produces valid PNG buffers (89 50 4E 47 magic bytes), quality parameter affects JPEG file size, outputBase64 true populates base64 field, outputBase64 false leaves base64 undefined. | Status: done
 
 ---
 
@@ -137,9 +137,9 @@ This file tracks all implementation tasks derived from SPEC.md. Each task is gra
 
 ## Phase 13: createSampler() Factory
 
-- [ ] **Implement createSampler() factory** -- In `src/factory.ts`, implement `createSampler(config: SamplerConfig): VideoSampler`. Return an object with `sample()`, `sampleStream()`, `detectScenes()`, and `getVideoInfo()` methods. The config serves as defaults, overridable per-call. | Status: not_done
-- [ ] **Implement config merging** -- When a per-call option is provided, it overrides the factory config. When not provided, the factory config value is used. | Status: not_done
-- [ ] **Export createSampler from index.ts** -- Add `createSampler` to the public exports in `src/index.ts`. | Status: not_done
+- [x] **Implement createSampler() factory** -- In `src/factory.ts`, implement `createSampler(config: SamplerConfig): VideoSampler`. Return an object with `sample()`, `sampleStream()`, `detectScenes()`, and `getVideoInfo()` methods. The config serves as defaults, overridable per-call. | Status: done
+- [x] **Implement config merging** -- When a per-call option is provided, it overrides the factory config. When not provided, the factory config value is used. | Status: done
+- [x] **Export createSampler from index.ts** -- Add `createSampler` to the public exports in `src/index.ts`. | Status: done
 - [ ] **Write factory tests** -- In `src/__tests__/factory.test.ts`, test: factory-created sampler uses config defaults, per-call options override config, all four methods (sample, sampleStream, detectScenes, getVideoInfo) are present and callable, multiple videos can be sampled with the same sampler instance. | Status: not_done
 
 ---
