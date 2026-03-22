@@ -3,6 +3,7 @@
 Smart video frame sampler for vision AI analysis.
 
 [![npm version](https://img.shields.io/npm/v/vidsnap-ai.svg)](https://www.npmjs.com/package/vidsnap-ai)
+[![npm downloads](https://img.shields.io/npm/dt/vidsnap-ai.svg)](https://www.npmjs.com/package/vidsnap-ai)
 [![license](https://img.shields.io/npm/l/vidsnap-ai.svg)](https://github.com/SiluPanda/vidsnap-ai/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/vidsnap-ai.svg)](https://nodejs.org/)
 [![types](https://img.shields.io/npm/types/vidsnap-ai.svg)](https://www.npmjs.com/package/vidsnap-ai)
