@@ -76,7 +76,7 @@ describe('sample()', () => {
 
   it('meta contains strategy, processingTimeMs, candidatesEvaluated', async () => {
     const result = await sample('/test.mp4');
-    expect(result.meta.strategy).toBe('uniform');
+    expect(result.meta.strategy).toBe('hybrid');
     expect(typeof result.meta.processingTimeMs).toBe('number');
     expect(result.meta.processingTimeMs).toBeGreaterThanOrEqual(0);
     expect(result.meta.candidatesEvaluated).toBeGreaterThan(0);

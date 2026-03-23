@@ -1,4 +1,3 @@
-import { randomUUID } from 'crypto';
 import type { VideoSource, SampleOptions, SampleResult, SampledFrame, SamplingStrategy } from './types';
 import { getVideoInfo } from './info';
 import { getTimestamps } from './strategies';
@@ -6,7 +5,7 @@ import { extractFrames } from './video/frame-extractor';
 import { writeTmpFile, cleanTmpFile } from './video/tmp-utils';
 
 const DEFAULTS: Required<Pick<SampleOptions, 'strategy' | 'count' | 'outputFormat' | 'outputBase64' | 'maxFrames' | 'minFrames'>> = {
-  strategy: 'uniform',
+  strategy: 'hybrid',
   count: 8,
   outputFormat: 'jpeg',
   outputBase64: false,
@@ -21,7 +20,7 @@ export async function sample(
   const startMs = Date.now();
 
   const resolvedOptions: Partial<SampleOptions> = { ...DEFAULTS, ...options };
-  const strategy: SamplingStrategy = resolvedOptions.strategy ?? 'uniform';
+  const strategy: SamplingStrategy = resolvedOptions.strategy ?? 'hybrid';
   const outputBase64 = resolvedOptions.outputBase64 ?? false;
   const outputFormat = resolvedOptions.outputFormat ?? 'jpeg';
 
@@ -50,7 +49,6 @@ export async function sample(
     });
 
     const frames: SampledFrame[] = rawFrames.map((raw, idx) => {
-      void randomUUID(); // id not in SampledFrame interface
       const frame: SampledFrame = {
         buffer: raw.data,
         timestamp: raw.timestamp,
